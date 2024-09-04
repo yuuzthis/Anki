@@ -1,0 +1,64 @@
+<!-- <hr id=answer> -->
+
+<div class="sm-container">
+    <div id="type-input-hide">{{type:Word}}</div>
+    <div class="flashcard-item-wrapper">
+        <div class="flashcard">
+            <div class="flippable flipme">
+                <div class="flashcard-back">
+                    <div class="row">
+                        <div class="col grow-0">
+                            <div class="flashcard-back-content">
+                                <h1 class="font-2">{{Word}}
+                                    <span class="h4">{{Phonetic symbol}}<span>
+                                </h1>
+                                <h1 class="font-2">{{Mean}}</h1>
+                                <div class="mb-2">
+                                    <div class="h4">
+                                        <div class="prewrap">Synonyms</div>
+                                    </div>
+                                    <div class="h4">
+                                        <div class="font-500">{{Synonyms}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://derdemystifier.github.io/AnkiIgnoreCase/ignoreCase.min.js"></script>
+
+<script>
+    (() => {
+        platform = '';
+        var conditions = {
+            AnkiDesktop: document.documentElement.className.split(/\s/).some(c => /linux|win|mac/.test(c)),
+            AnkiWeb: /AnkiWeb/.test(document.querySelector("title").innerText),
+            AnkiMobile: document.documentElement.classList.contains("safari"),
+            AnkiDroid: globalThis.AnkiDroidJS != null,
+        }
+
+        Object.keys(conditions).forEach((key) => {
+            globalThis[`is${key}`] = conditions[key];
+        });
+
+        if (globalThis.isAnkiDesktop) {
+            platform = 'AnkiDesktop';
+        }
+        if (globalThis.isAnkiDroid) {
+            platform = 'AnkiDroid';
+        }
+        if (globalThis.isAnkiWeb) {
+            platform = 'AnkiWeb';
+            const inputTypeElement = document.getElementById('type-input-hide');
+            inputTypeElement.style.display = 'none';
+        }
+
+        const platformElement = document.getElementById('platform-info');
+        platformElement.innerText = `Platform: ${platform}`;
+    })();
+</script>
