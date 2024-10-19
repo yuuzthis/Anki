@@ -19113,6 +19113,11 @@ h4.learncourse-heading {
     width: 100%
 }
 
+.flashcard-front-content {
+    position: relative;
+    z-index: 1; /* Đảm bảo chữ hiển thị trên nền */
+  }
+
 .flashcard-back,
 .flashcard-front {
     height: 350px;
@@ -20454,8 +20459,9 @@ img.studygroup-thumbnail {
 img {
     width: auto;
     height: auto;
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 15px;
 }
 
 #typeans {
