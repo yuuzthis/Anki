@@ -28,7 +28,7 @@
               <span class="font-1 font-400">US</span>
             </h1>
             <h1 class="font-2">
-              <div>{{Mean}}</div>
+              <div id="example-cloze"></div>
             </h1>
             <div>{{Picture}}</div>
           </div>
@@ -69,6 +69,28 @@
       return clozeWord;
     }
 
+    function getWords(str) {
+      const words = str.trim().split(/\s+/);
+      return words.filter(word => word.length > 0);
+    }
+
+    function createClozeString(sentence) {
+      const wordsList = getWords(sentence);
+      const clozeSentence = [];
+
+      for (let i = 0; i < wordsList.length; i++) {
+        clozeSentence.push(createClozeDeletion(wordsList[i]));
+      }
+
+      const wordsString = clozeSentence.join('    ');
+      return wordsString;
+    }
+
+    function replaceWordInExample(word, example) {
+      const regex = new RegExp(word, 'gi');
+      return example.replace(regex, '________');
+    }
+
     platform = '';
     var conditions = {
       AnkiDesktop: document.documentElement.className.split(/\s/).some(c => /linux|win|mac/.test(c)),
@@ -84,13 +106,16 @@
     if (globalThis.isAnkiDesktop) {
       platform = 'AnkiDesktop';
       const word = `{{Word}}`;
+      const example = `{{Example}}`;
       if (globalThis.isAnkiWeb) {
         const inputTypeElement = document.getElementById('type-input-hide');
         inputTypeElement.style.display = 'none';
         document.getElementById("cloze-word").innerText = word.trim();
       } else {
-        const clozeWord = createClozeDeletion(word);
-        document.getElementById("cloze-word").innerText = clozeWord.trim();
+        const clozeWord = createClozeString(word);
+        document.getElementById("cloze-word").innerHTML = clozeWord.trim();
+        const clozeExample = replaceWordInExample(word, example);
+        document.getElementById("example-cloze").innerText = clozeExample.trim();
       }
     }
     if (globalThis.isAnkiDroid) {

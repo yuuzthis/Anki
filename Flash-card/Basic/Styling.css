@@ -20499,3 +20499,7 @@ input[type="text"] {
     margin: 10px 0;
     font-size: 20px;
 }
+
+#cloze-word {
+    white-space: pre; /* Duy trì khoảng trắng */
+  }

@@ -1,1 +1,1 @@
-# Anki-flashcard-1
+# Anki
